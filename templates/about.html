@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang — GA Suplemen Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="brand-icon">G</div>
+            <div class="brand-text">
+                <div class="brand-title">GA Suplemen Optimizer</div>
+                <div class="brand-sub">Genetic Algorithm · Kecerdasan Buatan</div>
+            </div>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/simulation">Simulasi</a></li>
+            <li><a href="/how-to-use">Cara Pakai</a></li>
+            <li><a href="/about" class="active">Tentang</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <h1 class="page-title">Tentang Aplikasi</h1>
+        <p class="page-subtitle">
+            Penjelasan konsep, implementasi, dan teknologi yang digunakan
+        </p>
+
+        <div class="card">
+            <div class="card-title">Deskripsi Proyek</div>
+            <p class="komponen-desc" style="margin-bottom: 0;">
+                Aplikasi ini mengimplementasikan
+                <strong style="color: var(--accent);">Genetic Algorithm (GA)</strong>
+                untuk menyelesaikan masalah optimasi kombinasi suplemen kesehatan harian.
+                GA adalah metode pencarian heuristik yang terinspirasi dari proses evolusi
+                alam  individu terbaik bertahan, bereproduksi, dan menghasilkan generasi
+                yang semakin baik dari waktu ke waktu.
+            </p>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-key">Nama</span>
+                    <span class="info-val">Selsa Shafana Alfiyani</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-key">Mata Kuliah</span>
+                    <span class="info-val">Kecerdasan Buatan</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-key">Topik</span>
+                    <span class="info-val">B.3 Genetic Algorithm</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-key">Backend</span>
+                    <span class="info-val">Python + Flask</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-key">Frontend</span>
+                    <span class="info-val">HTML + CSS Vanilla</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-key">Visualisasi</span>
+                    <span class="info-val">Plotly (Python)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Representasi Kromosom</div>
+            <p class="komponen-desc">
+                Setiap individu dalam populasi direpresentasikan sebagai array biner
+                dengan panjang sama dengan jumlah suplemen yang tersedia.
+                Gen bernilai 1 berarti suplemen tersebut dipilih dalam kombinasi,
+                nilai 0 berarti tidak dipilih.
+                Contoh: [1,0,1,0,0,1] berarti suplemen ke-1, ke-3, dan ke-6 dipilih.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Fungsi Fitness</div>
+            <p class="komponen-desc">
+                Nilai fitness dihitung berdasarkan rata-rata persentase pemenuhan
+                6 nutrisi harian (Vitamin C, D, Zinc, Omega-3, Calcium, Iron)
+                terhadap nilai RDA standar WHO. Kombinasi yang total harganya
+                melebihi budget langsung mendapat fitness = 0 sehingga tidak
+                akan dipilih oleh algoritma.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Tournament Selection</div>
+            <p class="komponen-desc">
+                Sejumlah individu dipilih secara acak untuk bertanding.
+                Individu dengan nilai fitness tertinggi memenangkan turnamen
+                dan berhak untuk bereproduksi menghasilkan generasi berikutnya.
+                Metode ini memberikan tekanan seleksi yang konsisten.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Roulette Wheel Selection</div>
+            <p class="komponen-desc">
+                Probabilitas setiap individu dipilih sebanding dengan nilai
+                fitnessnya dibandingkan total fitness seluruh populasi.
+                Ibarat memutar roda roulette — individu dengan fitness lebih
+                tinggi mendapat bagian roda yang lebih besar.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Single-point Crossover</div>
+            <p class="komponen-desc">
+                Dua parent dipotong di satu titik acak. Bagian pertama parent 1
+                digabungkan dengan bagian kedua parent 2 untuk menghasilkan
+                dua offspring baru. Begitu pula sebaliknya.
+                Contoh: Parent1=[1,0,1|1,0] + Parent2=[0,1,0|0,1]
+                menghasilkan Child1=[1,0,1,0,1] dan Child2=[0,1,0,1,0].
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Multi-point Crossover</div>
+            <p class="komponen-desc">
+                Pemotongan dilakukan di dua titik acak sehingga segmen tengah
+                ditukar antar kedua parent. Menghasilkan keberagaman offspring
+                yang lebih tinggi dibandingkan single-point crossover.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Mutasi (Flip Bit)</div>
+            <p class="komponen-desc">
+                Setiap gen dalam offspring berpeluang terbalik (0 menjadi 1
+                atau 1 menjadi 0) sesuai dengan probabilitas mutasi yang diatur.
+                Mutasi mencegah konvergensi prematur dan menjaga keberagaman
+                populasi agar algoritma tidak terjebak di solusi lokal.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="komponen-title">Elitisme</div>
+            <p class="komponen-desc">
+                Individu dengan fitness tertinggi dari setiap generasi otomatis
+                dipertahankan dan masuk ke generasi berikutnya tanpa melalui
+                crossover atau mutasi. Ini memastikan kualitas solusi terbaik
+                tidak pernah hilang selama proses evolusi berlangsung.
+            </p>
+        </div>
+
+    </div>
+
+    <footer>
+        Simulasi Genetic Algorithm untuk Optimasi Suplemen Kesehatan Harian
+        &nbsp;·&nbsp; Mata Kuliah Kecerdasan Buatan
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cara Pakai — GA Suplemen Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="brand-icon">G</div>
+            <div class="brand-text">
+                <div class="brand-title">GA Suplemen Optimizer</div>
+                <div class="brand-sub">Genetic Algorithm · Kecerdasan Buatan</div>
+            </div>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/simulation">Simulasi</a></li>
+            <li><a href="/how-to-use" class="active">Cara Pakai</a></li>
+            <li><a href="/about">Tentang</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <h1 class="page-title">Cara Menggunakan Aplikasi</h1>
+        <p class="page-subtitle">
+            Panduan lengkap untuk pengguna umum maupun yang ingin
+            memahami cara kerja Genetic Algorithm
+        </p>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">1</div>
+            <div>
+                <div class="langkah-judul">Buka Halaman Simulasi</div>
+                <div class="langkah-desc">
+                    Klik menu Simulasi di navbar atas. Halaman simulasi
+                    berisi semua yang butuhkan  dari pengaturan
+                    budget, parameter algoritma, hingga daftar suplemen
+                    yang bisa di sesuaikan sendiri.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">2</div>
+            <div>
+                <div class="langkah-judul">Masukkan Budget Harian</div>
+                <div class="langkah-desc">
+                    Ketik jumlah uang yang ingin  dikeluarkan untuk suplemen
+                    setiap harinya. Contoh: ketik 50000 untuk budget Rp 50.000.
+                    Algoritma tidak akan memilih kombinasi yang melebihi budget ini.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">3</div>
+            <div>
+                <div class="langkah-judul">Cek Daftar Suplemen</div>
+                <div class="langkah-desc">
+                    Sudah tersedia 15 suplemen umum. Jika mempunyai suplemen
+                    lain dari apotek terdekat, klik tombol Tambah Suplemen dan
+                    isi kandungan nutrisinya sesuai label kemasan.
+                    Anda juga bisa hapus suplemen yang tidak tersedia.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">4</div>
+            <div>
+                <div class="langkah-judul">Klik Tombol Cari Suplemen Terbaik</div>
+                <div class="langkah-desc">
+                    Klik tombol besar di bawah form. Genetic Algorithm akan
+                    bekerja mencoba ribuan kombinasi suplemen dan memilih
+                    yang paling banyak memenuhi kebutuhan nutrisi harianmu
+                    dalam batas budget yang ditentukan.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">5</div>
+            <div>
+                <div class="langkah-judul">Baca Grafik Proses</div>
+                <div class="langkah-desc">
+                    Grafik menunjukkan bagaimana algoritma semakin membaik
+                    dari generasi ke generasi. Garis biru adalah nilai fitness terbaik,
+                    garis hijau putus-putus adalah rata-rata populasi. Ketika kedua garis mendatar,
+                    berarti solusi optimal sudah ditemukan.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">6</div>
+            <div>
+                <div class="langkah-judul">Baca Hasil Rekomendasi</div>
+                <div class="langkah-desc">
+                    Lihat suplemen apa saja yang direkomendasikan beserta
+                    total harganya. Progress bar nutrisi menunjukkan seberapa
+                    terpenuhi kebutuhan harianmu. Hijau berarti sudah cukup,
+                    oranye berarti masih kurang.
+                </div>
+            </div>
+        </div>
+
+        <div class="card langkah-card">
+            <div class="langkah-nomor">7</div>
+            <div>
+                <div class="langkah-judul">Simpan Grafik</div>
+                <div class="langkah-desc">
+                    Klik tombol Simpan PNG di bawah grafik untuk menyimpan
+                    grafik evolusi fitness sebagai gambar PNG berkualitas tinggi.
+                    File tersimpan otomatis di folder static/img.
+                </div>
+            </div>
+        </div>
+
+        <div class="card tips-card">
+            <div class="tips-title">Parameter yang Disarankan</div>
+            <div class="tips-grid">
+                <div class="tips-item">
+                    <span class="tips-key">Ukuran Populasi</span>
+                    <span class="tips-val">50 - 100</span>
+                </div>
+                <div class="tips-item">
+                    <span class="tips-key">Jumlah Generasi</span>
+                    <span class="tips-val">100 - 200</span>
+                </div>
+                <div class="tips-item">
+                    <span class="tips-key">Tingkat Persilangan</span>
+                    <span class="tips-val">0.7 - 0.9</span>
+                </div>
+                <div class="tips-item">
+                    <span class="tips-key">Tingkat Perubahan Acak</span>
+                    <span class="tips-val">0.01 - 0.1</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Simulasi Genetic Algorithm untuk Optimasi Suplemen Kesehatan Harian
+        &nbsp;·&nbsp; Mata Kuliah Kecerdasan Buatan
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi — GA Suplemen Optimizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="brand-icon">G</div>
+            <div class="brand-text">
+                <div class="brand-title">GA Suplemen Optimizer</div>
+                <div class="brand-sub">Genetic Algorithm · Kecerdasan Buatan</div>
+            </div>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="/">Beranda</a></li>
+            <li><a href="/simulation" class="active">Simulasi</a></li>
+            <li><a href="/how-to-use">Cara Pakai</a></li>
+            <li><a href="/about">Tentang</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <!-- JUDUL -->
+        <h1 class="page-title">Simulasi Optimasi Suplemen</h1>
+        <p class="page-subtitle">
+            Isi semua bagian di bawah dari atas ke bawah,
+            lalu klik tombol untuk mendapatkan rekomendasi suplemen terbaik
+        </p>
+
+        <!-- ALUR LANGKAH -->
+        <div class="alur-bar">
+            <div class="alur-item">
+                <div class="alur-nomor">1</div>
+                <div class="alur-teks">Atur Budget</div>
+            </div>
+            <div class="alur-garis"></div>
+            <div class="alur-item">
+                <div class="alur-nomor">2</div>
+                <div class="alur-teks">Atur Parameter GA</div>
+            </div>
+            <div class="alur-garis"></div>
+            <div class="alur-item">
+                <div class="alur-nomor">3</div>
+                <div class="alur-teks">Cek Daftar Suplemen</div>
+            </div>
+            <div class="alur-garis"></div>
+            <div class="alur-item">
+                <div class="alur-nomor">4</div>
+                <div class="alur-teks">Lihat Hasil</div>
+            </div>
+        </div>
+
+        <!-- ================================================ -->
+        <!-- LANGKAH 1: BUDGET                                -->
+        <!-- ================================================ -->
+        <div class="card">
+            <div class="langkah-badge">Langkah 1 dari 3</div>
+            <div class="card-title">Berapa Budget Suplemen Harianmu?</div>
+            <p class="card-subtitle">
+                Masukkan jumlah uang yang ingin kamu keluarkan untuk suplemen
+                setiap harinya. Algoritma tidak akan memilih kombinasi yang
+                melebihi batas ini.
+            </p>
+
+            <div class="budget-box">
+                <div class="budget-row">
+                    <div class="budget-prefix">Rp</div>
+                    <input type="number" id="maxBudget"
+                        class="budget-input"
+                        value="50000" step="5000" min="5000">
+                </div>
+                <div class="budget-contoh">
+                    Contoh: 30000 = Rp 30.000 &nbsp;·&nbsp;
+                    50000 = Rp 50.000 &nbsp;·&nbsp;
+                    100000 = Rp 100.000
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================ -->
+        <!-- LANGKAH 2: PARAMETER GA                          -->
+        <!-- ================================================ -->
+        <div class="card">
+            <div class="langkah-badge">Langkah 2 dari 3</div>
+            <div class="card-title">Atur Parameter Genetic Algorithm</div>
+            <p class="card-subtitle">
+                Parameter ini mengontrol cara kerja algoritma dalam mencari
+                kombinasi terbaik. Nilai default sudah dioptimalkan —
+                kamu bisa langsung lanjut ke langkah berikutnya
+                atau ubah sesuai kebutuhan.
+            </p>
+
+            <!-- Baris 1: Populasi dan Generasi -->
+            <div class="params-grid">
+
+                <div class="param-box">
+                    <div class="param-label-row">
+                        <span class="form-label">Ukuran Populasi</span>
+                        <span class="param-value" id="val-pop">50</span>
+                    </div>
+                    <input type="range" id="populationSize"
+                        min="10" max="200" value="50"
+                        oninput="document.getElementById('val-pop').innerText = this.value">
+                    <div class="param-skala">
+                        <span>10 (cepat)</span>
+                        <span>200 (akurat)</span>
+                    </div>
+                    <div class="param-penjelasan">
+                        Jumlah kombinasi suplemen yang dicoba bersamaan
+                        dalam satu generasi. Semakin besar semakin akurat
+                        tapi semakin lama prosesnya.
+                    </div>
+                </div>
+
+                <div class="param-box">
+                    <div class="param-label-row">
+                        <span class="form-label">Jumlah Generasi</span>
+                        <span class="param-value" id="val-gen">100</span>
+                    </div>
+                    <input type="range" id="generations"
+                        min="10" max="300" value="100"
+                        oninput="document.getElementById('val-gen').innerText = this.value">
+                    <div class="param-skala">
+                        <span>10 (cepat)</span>
+                        <span>300 (teliti)</span>
+                    </div>
+                    <div class="param-penjelasan">
+                        Berapa kali algoritma memperbaiki kombinasi.
+                        Semakin banyak generasi, hasil semakin baik
+                        tapi membutuhkan waktu lebih lama.
+                    </div>
+                </div>
+
+                <div class="param-box">
+                    <div class="param-label-row">
+                        <span class="form-label">Probabilitas Crossover</span>
+                        <span class="param-value" id="val-cx">0.80</span>
+                    </div>
+                    <input type="range" id="crossoverRate"
+                        min="0" max="1" step="0.01" value="0.8"
+                        oninput="document.getElementById('val-cx').innerText = parseFloat(this.value).toFixed(2)">
+                    <div class="param-skala">
+                        <span>0 (tidak)</span>
+                        <span>1 (selalu)</span>
+                    </div>
+                    <div class="param-penjelasan">
+                        Peluang dua kombinasi digabung untuk menghasilkan
+                        kombinasi baru yang lebih baik. Nilai 0.8 artinya
+                        80% pasangan akan melakukan crossover.
+                    </div>
+                </div>
+
+                <div class="param-box">
+                    <div class="param-label-row">
+                        <span class="form-label">Probabilitas Mutasi</span>
+                        <span class="param-value" id="val-mut">0.05</span>
+                    </div>
+                    <input type="range" id="mutationRate"
+                        min="0" max="0.5" step="0.01" value="0.05"
+                        oninput="document.getElementById('val-mut').innerText = parseFloat(this.value).toFixed(2)">
+                    <div class="param-skala">
+                        <span>0 (stabil)</span>
+                        <span>0.5 (acak)</span>
+                    </div>
+                    <div class="param-penjelasan">
+                        Peluang satu gen berubah secara acak. Nilai kecil
+                        mencegah algoritma terjebak di solusi yang kurang
+                        optimal. Disarankan antara 0.01 sampai 0.1.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Baris 2: Seleksi dan Crossover -->
+            <div class="params-select-grid">
+
+                <div class="select-box">
+                    <label class="form-label">Metode Seleksi</label>
+                    <select id="selectionMethod" class="form-control">
+                        <option value="tournament">
+                            Tournament Selection
+                        </option>
+                        <option value="roulette">
+                            Roulette Wheel Selection
+                        </option>
+                    </select>
+                    <div class="param-penjelasan">
+                        Tournament: beberapa individu diadu, yang terbaik
+                        dipilih. Roulette: individu lebih baik punya peluang
+                        lebih besar untuk dipilih.
+                    </div>
+                </div>
+
+                <div class="select-box">
+                    <label class="form-label">Metode Crossover</label>
+                    <select id="crossoverMethod" class="form-control">
+                        <option value="single">
+                            Single-point Crossover
+                        </option>
+                        <option value="multi">
+                            Multi-point Crossover
+                        </option>
+                    </select>
+                    <div class="param-penjelasan">
+                        Single-point: gen ditukar di satu titik potong.
+                        Multi-point: gen ditukar di dua titik potong
+                        untuk variasi lebih banyak.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Info Elitisme -->
+            <div class="info-elitisme">
+                <div class="info-elitisme-dot"></div>
+                <div>
+                    <strong>Elitisme aktif secara otomatis</strong> —
+                    kombinasi terbaik dari setiap generasi selalu
+                    dipertahankan ke generasi berikutnya sehingga
+                    kualitas solusi tidak pernah menurun.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================================================ -->
+        <!-- LANGKAH 3: DAFTAR SUPLEMEN                       -->
+        <!-- ================================================ -->
+        <div class="card">
+            <div class="langkah-badge">Langkah 3 dari 3</div>
+            <div class="card-title">Daftar Suplemen yang Tersedia</div>
+            <p class="card-subtitle">
+                Ini adalah suplemen yang akan dipilih-pilih oleh algoritma.
+                Sudah tersedia 15 suplemen umum dari apotek. Kamu bisa
+                menambah suplemen lain atau menghapus yang tidak tersedia
+                di daerahmu.
+            </p>
+
+            <div class="tabel-header">
+                <div class="tabel-info">
+                    Total <strong id="jml-suplemen">15</strong>
+                    suplemen tersedia
+                </div>
+                <button class="btn btn-secondary"
+                    onclick="toggleFormTambah()">
+                    Tambah Suplemen
+                </button>
+            </div>
+
+            <!-- Form tambah -->
+            <div id="formTambah" class="form-tambah"
+                style="display: none;">
+                <div class="form-tambah-title">
+                    Tambah Suplemen dari Apotek
+                </div>
+                <p class="form-tambah-desc">
+                    Lihat label kemasan suplemen kamu, lalu isi kandungan
+                    nutrisinya di bawah. Biarkan 0 jika tidak ada kandungan
+                    tersebut.
+                </p>
+                <div id="errorTambah" class="alert alert-warning"
+                    style="display: none;"></div>
+                <div class="form-tambah-grid">
+                    <div class="form-group form-full">
+                        <label class="form-label">Nama Suplemen</label>
+                        <input type="text" id="inp-name"
+                            class="form-control"
+                            placeholder="Contoh: Vitamin B12 500mcg">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vitamin C (mg)</label>
+                        <input type="number" id="inp-vitC"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vitamin D (IU)</label>
+                        <input type="number" id="inp-vitD"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Zinc (mg)</label>
+                        <input type="number" id="inp-zinc"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Omega-3 (mg)</label>
+                        <input type="number" id="inp-omega3"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Calcium (mg)</label>
+                        <input type="number" id="inp-calcium"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Iron / Zat Besi (mg)
+                        </label>
+                        <input type="number" id="inp-iron"
+                            class="form-control" value="0" min="0">
+                    </div>
+                    <div class="form-group form-full">
+                        <label class="form-label">
+                            Harga per Tablet/Kapsul (Rp)
+                        </label>
+                        <input type="number" id="inp-price"
+                            class="form-control"
+                            value="0" min="0" step="500">
+                    </div>
+                </div>
+                <button class="btn btn-primary"
+                    onclick="tambahSuplemen()">
+                    Simpan
+                </button>
+                <button class="btn btn-secondary"
+                    onclick="toggleFormTambah()"
+                    style="margin-left: 8px;">
+                    Batal
+                </button>
+            </div>
+
+            <!-- Tabel suplemen -->
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Suplemen</th>
+                            <th>Vit C (mg)</th>
+                            <th>Vit D (IU)</th>
+                            <th>Zinc (mg)</th>
+                            <th>Omega-3 (mg)</th>
+                            <th>Calcium (mg)</th>
+                            <th>Iron (mg)</th>
+                            <th>Harga (Rp)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="bodySuplemen"></tbody>
+                </table>
+            </div>
+
+            <!-- Target RDA -->
+            <div class="rda-info">
+                <div class="rda-info-title">
+                    Target Nutrisi Harian yang Ingin Dipenuhi
+                    (Standar WHO)
+                </div>
+                <div class="rda-grid">
+                    <div class="rda-item">
+                        <div class="rda-label">Vitamin C</div>
+                        <div class="rda-value">75 mg</div>
+                    </div>
+                    <div class="rda-item">
+                        <div class="rda-label">Vitamin D</div>
+                        <div class="rda-value">600 IU</div>
+                    </div>
+                    <div class="rda-item">
+                        <div class="rda-label">Zinc</div>
+                        <div class="rda-value">8 mg</div>
+                    </div>
+                    <div class="rda-item">
+                        <div class="rda-label">Omega-3</div>
+                        <div class="rda-value">1000 mg</div>
+                    </div>
+                    <div class="rda-item">
+                        <div class="rda-label">Calcium</div>
+                        <div class="rda-value">1000 mg</div>
+                    </div>
+                    <div class="rda-item">
+                        <div class="rda-label">Iron</div>
+                        <div class="rda-value">18 mg</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================ -->
+        <!-- TOMBOL JALANKAN                                  -->
+        <!-- ================================================ -->
+        <div class="jalankan-box">
+            <div class="jalankan-judul">
+                Semua sudah siap? Jalankan Simulasi
+            </div>
+            <p class="jalankan-desc">
+                Genetic Algorithm akan mencoba
+                <strong id="total-kombinasi">ribuan</strong>
+                kombinasi dari
+                <strong id="total-suplemen-btn">15</strong>
+                suplemen yang tersedia, lalu memilih yang paling
+                banyak memenuhi kebutuhan nutrisi harianmu
+                dalam batas budget Rp
+                <strong id="preview-budget">50.000</strong>.
+            </p>
+            <button class="btn btn-primary btn-jalankan"
+                id="btnJalankan" onclick="jalankanSimulasi()">
+                Jalankan Simulasi Genetic Algorithm
+            </button>
+        </div>
+
+        <!-- ================================================ -->
+        <!-- LOADING                                          -->
+        <!-- ================================================ -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-teks">
+                Genetic Algorithm sedang berjalan...
+            </div>
+            <div class="loading-sub">
+                Mencari kombinasi suplemen terbaik dari semua
+                kemungkinan yang ada
+            </div>
+        </div>
+
+        <!-- ================================================ -->
+        <!-- HASIL SIMULASI                                   -->
+        <!-- ================================================ -->
+        <div id="hasilArea" style="display: none;">
+
+            <!-- Grafik Evolusi -->
+            <div class="card">
+                <div class="hasil-section-tag">Hasil Simulasi</div>
+                <div class="card-title">
+                    Grafik Evolusi Fitness per Generasi
+                </div>
+                <p class="card-subtitle">
+                    Grafik ini menunjukkan bagaimana Genetic Algorithm
+                    semakin menemukan kombinasi yang lebih baik dari
+                    generasi ke generasi.
+                    Garis biru adalah nilai fitness terbaik,
+                    garis hijau adalah rata-rata seluruh populasi.
+                    Ketika garis mendatar, algoritma sudah menemukan
+                    solusi optimal.
+                </p>
+                <div id="grafik"></div>
+
+                <!-- Tombol simpan grafik -->
+                <div class="export-row">
+                    <div>
+                        <div class="export-title">
+                            Simpan Grafik 
+                        </div>
+                        <div class="export-desc">
+                            File PNG tersimpan di
+                            <strong>static/img/</strong>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary"
+                        id="btnDownload" onclick="downloadGrafik()">
+                        Simpan PNG
+                    </button>
+                </div>
+                <div id="notif-download" class="alert alert-success"
+                    style="display: none; margin-top: 10px;"></div>
+            </div>
+
+            <!-- Rekomendasi Suplemen -->
+            <div class="card card-hasil">
+
+                <div class="hasil-top">
+                    <div>
+                        <div class="hasil-section-tag">
+                            Rekomendasi Terbaik
+                        </div>
+                        <div class="card-title">
+                            Kombinasi Suplemen yang Ditemukan
+                        </div>
+                        <div class="card-subtitle"
+                            id="subjudul-hasil"
+                            style="margin-bottom: 0;">
+                        </div>
+                    </div>
+                    <!-- Metrik GA -->
+                    <div id="metrik-ga" class="metrik-grid"></div>
+                    <div class="fitness-badge">
+                        <div class="fitness-angka"
+                            id="fitness-angka">0%</div>
+                        <div class="fitness-label">
+                            Tingkat Kesesuaian
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suplemen terpilih -->
+                <div class="section-label">
+                    Suplemen yang Direkomendasikan
+                </div>
+                <div id="suplemen-terpilih"
+                    class="suplemen-grid"></div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Pemenuhan nutrisi -->
+                <div class="section-label">
+                    Pemenuhan Kebutuhan Nutrisi Harian
+                </div>
+                <p class="section-desc">
+                    Seberapa banyak kebutuhan nutrisi harianmu
+                    yang terpenuhi dari kombinasi suplemen ini
+                    berdasarkan standar WHO.
+                </p>
+                <div id="nutrisi-bars" class="nutrisi-grid"></div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Kesimpulan -->
+                <div class="section-label">Kesimpulan</div>
+                <div id="kesimpulan-box"></div>
+
+                <!-- Divider -->
+                <div class="divider"></div>
+
+                <!-- Kromosom -->
+                <div class="section-label">
+                    Representasi Kromosom Biner
+                </div>
+                <p class="section-desc">
+                    Ini adalah cara Genetic Algorithm menyimpan
+                    kombinasi suplemen pilihan dalam bentuk kode biner.
+                    Setiap kotak mewakili satu suplemen dalam daftar.
+                    Kotak biru berarti suplemen itu dipilih,
+                    kotak abu berarti tidak dipilih.
+                </p>
+                <div class="kromosom-wrap"
+                    id="kromosom-display"></div>
+                <div class="kromosom-legend">
+                    <span class="gen-box gen-1">1</span>
+                    Suplemen dipilih
+                    &nbsp;&nbsp;
+                    <span class="gen-box gen-0">0</span>
+                    Suplemen tidak dipilih
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        Simulasi Genetic Algorithm untuk Optimasi Suplemen
+        Kesehatan Harian &nbsp;·&nbsp; Mata Kuliah Kecerdasan Buatan
+    </footer>
+
+    <script>
+        var dataSuplemenList = {{ suplemen | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

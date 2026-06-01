@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GA Suplemen Optimizer — Kecerdasan Buatan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <div class="brand-icon">G</div>
+            <div class="brand-text">
+                <div class="brand-title">GA Suplemen Optimizer</div>
+                <div class="brand-sub">Genetic Algorithm · Kecerdasan Buatan</div>
+            </div>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="/" class="active">Beranda</a></li>
+            <li><a href="/simulation">Simulasi</a></li>
+            <li><a href="/how-to-use">Cara Pakai</a></li>
+            <li><a href="/about">Tentang</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+
+        <div class="hero">
+            <div class="hero-tag">
+                Mata Kuliah Kecerdasan Buatan — Topik B.3 Genetic Algorithm
+            </div>
+            <h1 class="hero-title">
+                Simulasi Genetic Algorithm<br>
+                <span>Optimasi Suplemen Kesehatan Harian</span>
+            </h1>
+            <p class="hero-desc">
+                Masukkan budget harian, dan biarkan Genetic Algorithm
+                menemukan kombinasi suplemen terbaik yang memenuhi kebutuhan
+                nutrisi harianmu secara optimal.
+            </p>
+            <div class="hero-actions">
+                <a href="/simulation" class="btn btn-primary">
+                    Mulai Simulasi
+                </a>
+                <a href="/how-to-use" class="btn btn-secondary">
+                    Cara Pakai
+                </a>
+            </div>
+        </div>
+
+        <div class="fitur-grid">
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Representasi Kromosom</div>
+                <p class="fitur-desc">
+                    Setiap kombinasi suplemen direpresentasikan sebagai
+                    kromosom biner. Gen 1 berarti dipilih, gen 0 tidak dipilih.
+                </p>
+            </div>
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Fungsi Fitness</div>
+                <p class="fitur-desc">
+                    Menilai seberapa baik kombinasi memenuhi 6 nutrisi
+                    harian berdasarkan standar RDA dari WHO.
+                </p>
+            </div>
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Seleksi dan Crossover</div>
+                <p class="fitur-desc">
+                    Pilih metode Tournament atau Roulette Wheel, serta
+                    crossover Single-point atau Multi-point.
+                </p>
+            </div>
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Mutasi</div>
+                <p class="fitur-desc">
+                    Mutasi acak menjaga keberagaman populasi dan mencegah
+                    algoritma terjebak di solusi yang kurang optimal.
+                </p>
+            </div>
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Elitisme</div>
+                <p class="fitur-desc">
+                    Kombinasi terbaik otomatis dipertahankan ke generasi
+                    berikutnya agar kualitas solusi tidak menurun.
+                </p>
+            </div>
+            <div class="card">
+                <div class="fitur-icon"></div>
+                <div class="fitur-title">Visualisasi Plotly</div>
+                <p class="fitur-desc">
+                    Grafik interaktif evolusi fitness per generasi
+                    ditampilkan menggunakan Plotly untuk Python.
+                </p>
+            </div>
+        </div>
+
+        <div class="stats-banner">
+            <div>
+                <div class="stats-number">15</div>
+                <div class="stats-label">Jenis Suplemen</div>
+            </div>
+            <div>
+                <div class="stats-number">6</div>
+                <div class="stats-label">Nutrisi Dipantau</div>
+            </div>
+            <div>
+                <div class="stats-number">100%</div>
+                <div class="stats-label">Berbasis Web</div>
+            </div>
+            <div>
+                <div class="stats-number">Open</div>
+                <div class="stats-label">Source Code</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Simulasi Genetic Algorithm untuk Optimasi Suplemen Kesehatan Harian
+        &nbsp;·&nbsp; Mata Kuliah Kecerdasan Buatan
+    </footer>
+
+</body>
+</html>
