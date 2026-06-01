@@ -245,17 +245,21 @@ def about():
 # Jalankan server Flask
 # -------------------------------------------------------
 if __name__ == "__main__":
+    import os
+
+    port = int(os.environ.get("PORT", 5000))
+
     print("")
     print("=" * 60)
     print("  GA Suplemen Optimizer")
     print("  Simulasi Genetic Algorithm — Kecerdasan Buatan")
     print("=" * 60)
     print("")
-    print("  Server berjalan di  : http://127.0.0.1:5000")
+    print(f"  Server berjalan di  : http://127.0.0.1:{port}")
     print("")
     print("  Ctrl+Klik link di atas untuk membuka browser.")
     print("  Tekan CTRL+C untuk menghentikan server.")
     print("=" * 60)
     print("")
 
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=port, debug=False)
