@@ -244,22 +244,6 @@ def about():
 # -------------------------------------------------------
 # Jalankan server Flask
 # -------------------------------------------------------
-if __name__ == "__main__":
-    import os
-
-    port = int(os.environ.get("PORT", 5000))
-
-    print("")
-    print("=" * 60)
-    print("  GA Suplemen Optimizer")
-    print("  Simulasi Genetic Algorithm — Kecerdasan Buatan")
-    print("=" * 60)
-    print("")
-    print(f"  Server berjalan di  : http://127.0.0.1:{port}")
-    print("")
-    print("  Ctrl+Klik link di atas untuk membuka browser.")
-    print("  Tekan CTRL+C untuk menghentikan server.")
-    print("=" * 60)
-    print("")
-
-    app.run(host="0.0.0.0", port=port, debug=False)
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
